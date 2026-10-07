@@ -41,6 +41,11 @@ FONT_CANDIDATES = [
     "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
     "/usr/share/fonts/truetype/arphic/uming.ttc",
     "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttf",
+    "/usr/share/fonts/opentype/noto/NotoSansSC-Regular.otf",
+    "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
+    "/usr/share/fonts/truetype/wqy/wqy-microhei.ttc",
+    os.path.join(HERE, "fonts", "NotoSansSC-Regular.otf"),
+    os.path.join(HERE, "fonts", "NotoSansSC-Regular.ttf"),
 ]
 
 WMO = {
@@ -375,6 +380,9 @@ def render(city, lat, lon, w, h, out, photo=None, quote=None, datefactor=1.0):
     # ── 更新时间 ─────────────────────────────────────
     draw(d, (M, y), f"更新于 {now:%m-%d %H:%M}", f_foot, LIGHT)
 
+    out_dir = os.path.dirname(os.path.abspath(out))
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
     img.save(out, "PNG")
     print(f"已生成 {out}  {w}x{h} 灰度 PNG | 块间距 {gap:.0f}px，"
           f"内容底边 {y + h_foot:.0f} / 可用 {h - M}")

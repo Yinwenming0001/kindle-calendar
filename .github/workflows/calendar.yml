@@ -22,8 +22,23 @@ jobs:
       - name: 安装中文字体与依赖
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk
+          sudo apt-get install -y -qq fonts-noto-cjk fontconfig
           pip install --quiet pillow requests
+
+      - name: 校验中文字体（缺失则下载兜底）
+        run: |
+          mkdir -p public fonts
+          if ! fc-list :lang=zh | grep -qi .; then
+            echo "系统无中文字体，下载 Noto Sans SC …"
+            curl -sL -o fonts/NotoSansSC-Regular.otf \
+              https://raw.githubusercontent.com/googlefonts/noto-cjk/main/Sans/SubsetOTF/SC/NotoSansSC-Regular.otf || true
+            if [ -s fonts/NotoSansSC-Regular.otf ]; then
+              sudo mkdir -p /usr/share/fonts/truetype/noto
+              sudo cp fonts/NotoSansSC-Regular.otf /usr/share/fonts/truetype/noto/
+              sudo fc-cache -f > /dev/null
+            fi
+          fi
+          fc-list :lang=zh | head -3
 
       - name: 生成台历图片
         run: python render_calendar.py --device ${{ vars.DEVICE || 'basic10' }} --out public/calendar.png
