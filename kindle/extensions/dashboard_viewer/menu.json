@@ -1,0 +1,20 @@
+{
+  "name": "台历 Dashboard",
+  "items": [
+    {
+      "name": "启动台历（开始自动刷新）",
+      "priority": 10,
+      "action": "bin/start.sh"
+    },
+    {
+      "name": "立即刷新一次",
+      "priority": 20,
+      "action": "bin/once.sh"
+    },
+    {
+      "name": "停止台历",
+      "priority": 30,
+      "action": "bin/stop.sh"
+    }
+  ]
+}

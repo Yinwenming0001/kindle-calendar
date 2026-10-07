@@ -1,0 +1,39 @@
+name: Render Kindle Calendar
+
+on:
+  push:
+    branches: ["main", "master"]
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 安装中文字体与依赖
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+          pip install --quiet pillow requests
+
+      - name: 生成台历图片
+        run: python render_calendar.py --device ${{ vars.DEVICE || 'basic10' }} --out public/calendar.png
+
+      - name: 发布到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./public
+          user_name: kindle-calendar-bot
+          user_email: bot@users.noreply.github.com
+          commit_message: "calendar update"

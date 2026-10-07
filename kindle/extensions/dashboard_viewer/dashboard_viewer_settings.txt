@@ -1,0 +1,15 @@
+# 台历配置：把 url 换成你自己的 GitHub Pages 图片地址
+# 其它项一般不用改
+
+# 图片地址（GitHub Pages 上 calendar.png 的公开链接）
+url=https://你的用户名.github.io/kindle-calendar/calendar.png
+
+# 白天刷新间隔（秒），默认 30 分钟
+dayinterval=1800
+
+# 夜间刷新间隔（秒），默认 2 小时，省电
+nightinterval=7200
+
+# 白天时段（小时，24 小时制）
+daystart=7
+dayend=23
