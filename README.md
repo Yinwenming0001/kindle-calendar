@@ -20,7 +20,18 @@ kindle/extensions/dashboard_viewer Kindle 端扩展，拷进设备即可用
 preview_kindle7.png                样张（600×800，第 7 代）
 ```
 
-## 第一步：搭好云端图片（约 10 分钟）
+## 台历图片地址（已配置好，直接用）
+
+```
+https://yinwenming0001.github.io/kindle-calendar/calendar.png
+```
+
+- 仓库：<https://github.com/Yinwenming0001/kindle-calendar>
+- 云端每 30 分钟自动重渲一次（Actions 定时任务），Pages 已开启
+- 这个地址已经预先填进 `dashboard_viewer_settings.txt` 了，Kindle 端不用手改
+- 浏览器打开上面那个地址应该能看到一张 600×800 的灰度台历图，看不到就等两三分钟（Pages 首次部署要一会儿）
+
+## 第一步：搭好云端图片（已由助手完成，仅作记录）
 
 1. 在 GitHub 新建一个 **Public** 仓库（例如 `kindle-calendar`），**不要**勾选自动生成 README
 2. 上传文件——二选一：
@@ -54,7 +65,7 @@ preview_kindle7.png                样张（600×800，第 7 代）
 1. USB 连 Kindle，把 `dashboard_viewer_kindle_install.zip` 解压出来的 `extensions` 文件夹**整个拖到 Kindle 根目录**
    （如果根目录已经有 `extensions`——装 MRPI 后就会有——就只把里面的 `dashboard_viewer` 文件夹拷进去，别覆盖整个 `extensions`）
    结果应该是：`Kindle盘符:/extensions/dashboard_viewer/`
-2. 用 **VS Code / 记事本++ / vim** 打开 `Kindle盘符:/extensions/dashboard_viewer/dashboard_viewer_settings.txt`，把 `url=` 后面换成第一步拿到的地址
+2. 用 **VS Code / 记事本++ / vim** 打开 `Kindle盘符:/extensions/dashboard_viewer/dashboard_viewer_settings.txt`，确认 `url=` 后面是上面那个地址（**默认已经填好了，一般不用动**）
    ⚠️ **不要用 Windows 自带记事本改**，它会把换行符改成 CRLF，脚本会失效
 3. 安全弹出 → 打开 KUAL → 「台历 Dashboard」→「启动台历」
 4. 等几秒屏幕刷新出台历就成功了。之后白天 30 分钟自动刷新一次，晚上 23:00–07:00 两小时一次

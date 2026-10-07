@@ -31,12 +31,19 @@ esac
 
 rm -f "$TMP"
 if command -v curl > /dev/null 2>&1; then
-    curl -s -m 90 -o "$TMP" "$FETCH_URL"
+    curl -sL -m 90 -o "$TMP" "$FETCH_URL"
+    SZ=$(wc -c < "$TMP" 2>/dev/null)
+    if [ "${SZ:-0}" -lt 2000 ]; then
+        curl -sL -k -m 90 -o "$TMP" "$URL"
+    fi
 elif command -v wget > /dev/null 2>&1; then
     wget -q -T 90 -O "$TMP" "$FETCH_URL"
 fi
 
-if [ -s "$TMP" ]; then
+SZ=$(wc -c < "$TMP" 2>/dev/null)
+echo "$(date '+%F %T') 下载字节数 ${SZ:-0}" >> "$LOG"
+
+if [ -s "$TMP" ] && [ "${SZ:-0}" -gt 2000 ]; then
     eips -f -g "$TMP"
     echo "$(date '+%F %T') 手动刷新成功" >> "$LOG"
 elif [ -s "$LOCAL" ]; then
